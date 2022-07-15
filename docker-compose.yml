@@ -1,0 +1,21 @@
+# docker-compose --log-level INFO up --build
+# docker-compose --log-level INFO up -d --build
+
+version: '3'
+services:
+  plantuml-server-docker:
+    stdin_open: true
+    tty: true
+    container_name: plantuml-server-docker
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9999:8080"
+    environment:
+      # 最好使用此设定时区，其它镜像也可以使用，也可以用"TZ=Asia/Shanghai"
+      - "TZ=CST-8"
+      - "BASE_URL=plantuml"
+    volumes:
+      - ./tmp:/tmp/jetty
+    restart: "no"
